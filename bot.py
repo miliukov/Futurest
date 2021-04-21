@@ -1,7 +1,8 @@
 from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext import CallbackContext, CommandHandler
-import random
+from newsapi import NewsApiClient
 
+newsapi = NewsApiClient(api_key='ac1090254ef54229bac8a6a1a300b2a7')
 TOKEN = "1525707127:AAHRkcH0iBcgmBsPnh3IQsxViLO7Js9JaYY"
 privet = ['Приветик!', 'Здравствуй', 'Хай', 'Привет)', 'Вечер в хату', 'Hello',
           'Привет', 'Ку-ку', 'Здарова', 'Хеллоу', 'Хелоу']
@@ -11,37 +12,20 @@ cool = ['Класс', 'Вау', 'Кул', 'Прекрас', 'Супер', 'Кр�
 
 def echo(update, context):
     lol = update.message.text
-    if 'расскажи' in lol.lower() and 'фильм' in lol.lower():
-        # КИНОПОИСК В ДЕЙСТВИИ
-        update.message.reply_text('Классный фильм, что могу сказать')
-    if 'расскажи' in lol.lower() and 'сериал' in lol.lower():
-        # КИНОПОИСК В ДЕЙСТВИИ
-        update.message.reply_text('Классный сериал, что могу сказать')
-    for j in cool:
-        if j.lower() in lol.lower() and 'фильм' not in lol.lower() and \
-                'сериал' not in lol.lower():
-            update.message.reply_text(
-                random.choice(['Спасибо', 'Благодарю', 'Няя']))
-    if 'найди' in lol.lower():
-        update.message.reply_text('Введи название фильма или сериала')
-        # КИНОПОИСК В ДЕЙСТВИИ
-        update.message.reply_text('Вот что мне удалось найти')
-    if 'посоветуй' in lol.lower():
-        if 'фильм' in lol.lower():
-            update.message.reply_text('Фильм тебе надо, да?')
-        elif 'сериал' in lol.lower():
-            update.message.reply_text('Сериальчик')
-        else:
-            update.message.reply_text('Фильм или сериал?')
-    for i in privet:
-        if i.lower() in lol.lower():
-            update.message.reply_text(random.choice(privet))
+    if 'расскажи' in lol.lower():
+        del lol['расскажи']
+        print('с')
+        update.message.reply_text('Секунду')
+        top_headlines = newsapi.get_everything(q=f'{lol.lower()}', language='ru')
+        title = top_headlines["articles"][0]["title"]
+        description = top_headlines["articles"][0]["description"]
+        update.message.reply_text(title, '\n', description)
+
 
 
 def start(update, context):
     update.message.reply_text(
-        "Привет! Я Олежа - твой помощник в мире фильмов и сериалов! Напиши мне"
-        " 'Посоветуй'")
+        "Привет! Я Олежа - твой помощник в мире новостей!")
 
 
 def help(update, context):

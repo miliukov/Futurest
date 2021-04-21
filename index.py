@@ -1,6 +1,15 @@
 from flask import Flask, render_template, url_for
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__, static_folder="templates")
+
+
+class LoginForm(FlaskForm):
+    username = StringField('Логин', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    submit = SubmitField('Отправить')
 
 
 @app.route("/")
@@ -18,9 +27,16 @@ def vr():
     return render_template('Виртуальная-реальность.html')
 
 
-@app.route("/contact")
+@app.route("/contact", methods=['GET', 'POST'])
 def contact():
     return render_template('Предложить-идею.html')
+
+
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        print('УРАААА')
+    return render_template('login.html', title='Авторизация', form=form)
 
 
 @app.route("/AI")
