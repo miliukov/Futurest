@@ -4,5 +4,4 @@ telebot
 newsapi
 psycopg2
 sqlalchemy
-sqlalchemy.dialects:postgres
 werkzeug

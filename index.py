@@ -51,6 +51,5 @@ def cafe():
 
 
 if __name__ == '__main__':
-    db_session.global_init()
     app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
 
