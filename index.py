@@ -32,13 +32,6 @@ def contact():
     return render_template('Предложить-идею.html')
 
 
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        print('УРАААА')
-    return render_template('login.html', title='Авторизация', form=form)
-
-
 @app.route("/AI")
 def ai():
     return render_template('Искусственный-интеллект.html')
