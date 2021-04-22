@@ -3,3 +3,4 @@ requests
 telebot
 newsapi
 psycopg2
+sqlalchemy
