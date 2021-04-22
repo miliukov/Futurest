@@ -95,6 +95,7 @@ def yes(message):
 @bot.message_handler(content_types=['text'])
 def contact(message):
     global flag
+    print(message.text)
     if flag:
         user_id = message.from_user.id
         cursor.execute(

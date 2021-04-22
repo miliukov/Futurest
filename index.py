@@ -1,15 +1,6 @@
-from flask import Flask, render_template, url_for
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired
+from flask import Flask, render_template
 
 app = Flask(__name__, static_folder="templates")
-
-
-class LoginForm(FlaskForm):
-    username = StringField('Логин', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
-    submit = SubmitField('Отправить')
 
 
 @app.route("/")
@@ -58,4 +49,11 @@ def cafe():
 
 
 if __name__ == '__main__':
+    db_session.global_init()
+    session = db_session.create_session()
+    if not session.query(User).first():
+        import fill_base
+
+    app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
+
     app.run(port=8080, host='127.0.0.1')

@@ -1,0 +1,6 @@
+flask
+requests
+telebot
+sqlite3
+newsapi
+psycopg2
