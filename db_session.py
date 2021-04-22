@@ -4,7 +4,6 @@ from config import LOCAL_DB
 
 def global_init():
    global __factory
-
    if __factory:
        return
 

@@ -1,4 +1,6 @@
 from flask import Flask, render_template
+import os
+import db_session
 
 app = Flask(__name__, static_folder="templates")
 
@@ -50,10 +52,5 @@ def cafe():
 
 if __name__ == '__main__':
     db_session.global_init()
-    session = db_session.create_session()
-    if not session.query(User).first():
-        import fill_base
-
     app.run(host='0.0.0.0', port=os.environ.get("PORT", 5000))
 
-    app.run(port=8080, host='127.0.0.1')
